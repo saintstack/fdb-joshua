@@ -8,6 +8,7 @@ RUN dnf -y update && \
         yum-utils && \
     dnf -y install \
         gettext \
+        procps-ng \
         jq-1.6 \
         python3-pip && \
     dnf -y clean all --enablerepo='*' && \
@@ -37,6 +38,8 @@ RUN curl -Ls https://github.com/apple/foundationdb/releases/download/${FDB_VERSI
 ENV LD_LIBRARY_PATH="/lib64:$LD_LIBRARY_PATH"
 
 # FDB python binding
+# Set PYTHONDONTWRITEBYTECODE so no .pyc files created.
+ENV PYTHONDONTWRITEBYTECODE=1
 RUN pip3 install \
         foundationdb==7.1.57 \
         boto3
